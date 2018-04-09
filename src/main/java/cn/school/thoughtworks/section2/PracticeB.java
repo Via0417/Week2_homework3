@@ -1,12 +1,23 @@
 package cn.school.thoughtworks.section2;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class PracticeB {
     Map<String, Integer> countSameElements(List<String> collection1) {
-        //实现练习要求，并改写该行代码。
+        Map<String, Long> map = collection1.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));
+        Map<String, Integer> result =convertLongToInteger(map);
+        return result;
+    }
 
-        return null;
+    static Map<String, Integer> convertLongToInteger(Map<String, Long> map){
+        Map<String, Integer> result = new HashMap<>();
+        for (String s: map.keySet()){
+            result.put(s, Math.toIntExact(map.get(s)));
+        }
+        return result;
     }
 }
